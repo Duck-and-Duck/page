@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bative | Autonomous Voice Infrastructure for SMBs</title>
+<meta name="description" content="Bative deploys custom voice agents that handle inbound calls, answer FAQs, and book directly into your calendar. Sub-800ms latency. Now accepting founding cohort applications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff; --bg-alt: #f8fafc; --text-main: #0f172a; --text-muted: #64748b;
+    --border: #e2e8f0; --accent: #000000; --accent-hover: #1e293b; --code-bg: #0f172a;
+    --radius: 12px;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-sans); background: var(--bg); color: var(--text-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+
+  h1 { font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1.1; letter-spacing: -0.03em; font-weight: 700; }
+  h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.2; letter-spacing: -0.02em; font-weight: 600; }
+  h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; }
+  p { color: var(--text-muted); font-size: 1.05rem; }
+  .lead { font-size: 1.2rem; color: var(--text-muted); max-width: 540px; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border-radius: 8px; font-weight: 500; font-size: 0.95rem; transition: all 0.2s; border: 1px solid transparent; cursor: pointer; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+  .btn-secondary { background: #fff; color: var(--text-main); border-color: var(--border); }
+  .btn-secondary:hover { border-color: var(--text-main); background: var(--bg-alt); }
+
+  nav { position: sticky; top: 0; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; }
+  .nav-container { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: var(--font-mono); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.05em; }
+  .logo span { color: var(--text-muted); }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text-main); }
+
+  .hero { padding: 80px 0; border-bottom: 1px solid var(--border); }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .badge { display: inline-block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 24px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 99px; background: var(--bg-alt); }
+  .hero-actions { display: flex; gap: 16px; margin-top: 32px; }
+  .hero-stats { display: flex; gap: 48px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+  .stat strong { display: block; font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; color: var(--text-main); }
+  .stat span { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .terminal { background: var(--code-bg); border-radius: var(--radius); overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15); border: 1px solid #1e293b; text-align: left; font-family: var(--font-mono); font-size: 13px; }
+  .terminal-header { background: #1e293b; padding: 12px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #334155; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ef4444; } .dot.yellow { background: #eab308; } .dot.green { background: #22c55e; }
+  .terminal-title { margin-left: 12px; color: #94a3b8; font-size: 12px; flex-grow: 1; }
+  .terminal-status { font-size: 11px; color: #ef4444; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+  .terminal-status::before { content: ''; width: 6px; height: 6px; background: #ef4444; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+  .terminal-body { padding: 24px; color: #e2e8f0; display: flex; flex-direction: column; gap: 16px; }
+  .line { display: flex; gap: 12px; line-height: 1.5; }
+  .speaker { font-weight: 600; flex-shrink: 0; width: 60px; }
+  .speaker.caller { color: #60a5fa; } .speaker.ai { color: #34d399; }
+  .tool-call { background: #1e293b; padding: 8px 12px; border-radius: 6px; color: #94a3b8; border-left: 2px solid #6366f1; margin-left: 72px; font-size: 12px; }
+  .tool-call.success { border-left-color: #22c55e; color: #4ade80; }
+
+  .stack-bar { padding: 48px 0; border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+  .stack-label { text-align: center; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 24px; }
+  .stack-logos { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; font-family: var(--font-mono); font-weight: 600; color: #94a3b8; font-size: 0.95rem; }
+
+  section { padding: 100px 0; border-bottom: 1px solid var(--border); }
+  .section-header { max-width: 640px; margin-bottom: 64px; }
+  .section-header p { margin-top: 16px; }
+
+  .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .bento-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 32px; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; transition: border-color 0.2s; }
+  .bento-card:hover { border-color: #cbd5e1; }
+  .bento-card.large { grid-column: span 2; }
+  .bento-icon { width: 40px; height: 40px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; font-family: var(--font-mono); font-weight: 600; font-size: 1.2rem; color: var(--text-main); }
+  .bento-card h3 { margin-bottom: 12px; }
+
+  .waveform { display: flex; align-items: center; gap: 3px; height: 40px; margin-top: 24px; }
+  .bar { width: 3px; background: #cbd5e1; border-radius: 2px; }
+  .bar:nth-child(1) { height: 20%; animation: wave 1.2s infinite ease-in-out; }
+  .bar:nth-child(2) { height: 60%; animation: wave 1.2s infinite ease-in-out 0.1s; }
+  .bar:nth-child(3) { height: 40%; animation: wave 1.2s infinite ease-in-out 0.2s; }
+  .bar:nth-child(4) { height: 80%; animation: wave 1.2s infinite ease-in-out 0.3s; }
+  .bar:nth-child(5) { height: 50%; animation: wave 1.2s infinite ease-in-out 0.4s; }
+  .bar:nth-child(6) { height: 90%; animation: wave 1.2s infinite ease-in-out 0.5s; }
+  .bar:nth-child(7) { height: 30%; animation: wave 1.2s infinite ease-in-out 0.6s; }
+  .bar:nth-child(8) { height: 70%; animation: wave 1.2s infinite ease-in-out 0.7s; }
+  @keyframes wave { 0%, 100% { transform: scaleY(0.5); } 50% { transform: scaleY(1.5); } }
+
+  .arch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+  .arch-step { position: relative; padding-top: 32px; border-top: 2px solid var(--border); }
+  .arch-num { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600; color: var(--text-muted); margin-bottom: 16px; }
+  .arch-step h3 { margin-bottom: 12px; }
+
+  .vertical-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .vertical-card { border: 1px solid var(--border); border-radius: 16px; padding: 32px; background: #fff; }
+  .vertical-card h3 { margin-bottom: 16px; font-family: var(--font-mono); font-size: 1.1rem; }
+  .vertical-card ul { list-style: none; padding: 0; margin-top: 24px; border-top: 1px solid var(--border); padding-top: 24px; }
+  .vertical-card li { font-size: 0.9rem; color: var(--text-muted); padding: 8px 0; display: flex; align-items: flex-start; gap: 8px; }
+  .vertical-card li::before { content: '→'; color: var(--text-main); font-family: var(--font-mono); }
+
+  .demo-section { background: var(--code-bg); color: #fff; border-bottom: none; }
+  .demo-section h2 { color: #fff; } .demo-section p { color: #94a3b8; }
+  .demo-container { text-align: center; max-width: 600px; margin: 0 auto; }
+  .demo-phone { margin-top: 48px; padding: 32px; border: 1px solid #334155; border-radius: 16px; background: #1e293b; }
+  .phone-number { font-family: var(--font-mono); font-size: 2rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 24px; color: #fff; }
+  .phone-actions { display: flex; gap: 16px; justify-content: center; }
+  .btn-demo { background: #fff; color: var(--code-bg); } .btn-demo:hover { background: #f1f5f9; }
+  .btn-copy { background: transparent; color: #fff; border: 1px solid #475569; } .btn-copy:hover { border-color: #fff; }
+
+  .cohort-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .cohort-card { border: 1px solid var(--border); border-radius: 16px; padding: 32px; background: #fff; display: flex; flex-direction: column; }
+  .cohort-card h3 { font-family: var(--font-mono); margin-bottom: 12px; font-size: 1.1rem; }
+  .cohort-card p { font-size: 0.95rem; flex-grow: 1; }
+  .cohort-badge { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: #fff; background: var(--text-main); padding: 4px 8px; border-radius: 4px; margin-bottom: 16px; align-self: flex-start; }
+
+  /* Form */
+  .pilot-form { max-width: 540px; margin: 48px auto 0; display: flex; flex-direction: column; gap: 16px; }
+  .input-group { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+  .input-group label { font-size: 12px; font-weight: 500; color: var(--text-main); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; }
+  .input-group input, .input-group select, .input-group textarea {
+    padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px;
+    font-family: var(--font-sans); font-size: 15px; background: #fff; transition: border-color 0.2s; width: 100%;
+  }
+  .input-group input:focus, .input-group select:focus, .input-group textarea:focus { outline: none; border-color: var(--text-main); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .consent { display: flex; gap: 12px; align-items: flex-start; font-size: 0.85rem; color: var(--text-muted); text-align: left; cursor: pointer; margin-top: 8px; }
+  .consent input { width: 16px; height: 16px; margin-top: 3px; accent-color: var(--text-main); flex-shrink: 0; }
+  .consent a { text-decoration: underline; color: var(--text-main); }
+
+  #privacy p strong { color: var(--text-main); font-weight: 600; }
+
+  footer { padding: 48px 0; background: var(--bg-alt); }
+  .foot-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 0.9rem; color: var(--text-muted); font-family: var(--font-mono); }
+  .foot-inner a:hover { color: var(--text-main); }
+
+  @media (max-width: 860px) {
+    .hero-grid, .bento-grid, .arch-grid, .vertical-grid, .cohort-grid, .form-row { grid-template-columns: 1fr; }
+    .bento-card.large { grid-column: span 1; }
+    .nav-links { display: none; }
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+    .stack-logos { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-container">
+    <a href="/" class="logo">bative<span>_</span></a>
+    <div class="nav-links">
+      <a href="#infrastructure">Infrastructure</a>
+      <a href="#verticals">Verticals</a>
+      <a href="#cohort">Cohort</a>
+      <a href="#apply">Apply</a>
+    </div>
+    <a href="#apply" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">Request Access</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <div class="badge">Now accepting founding cohort applications</div>
+      <h1>Deploy AI receptionists that actually understand your business.</h1>
+      <p class="lead">We are selecting a limited number of founding partners to deploy our voice infrastructure. Get 14 days of live production traffic at zero cost to prove the ROI before public launch.</p>
+      <div class="hero-actions">
+        <a href="#apply" class="btn btn-primary">Apply for Founding Access</a>
+        <a href="#demo" class="btn btn-secondary">Listen to live demo →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>&lt;800ms</strong><span>Latency</span></div>
+        <div class="stat"><strong>99.9%</strong><span>Uptime</span></div>
+        <div class="stat"><strong>24/7</strong><span>Availability</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+          <span class="terminal-title">Live Agent Transcript — Dental Clinic</span>
+          <span class="terminal-status">Recording</span>
+        </div>
+        <div class="terminal-body">
+          <div class="line"><span class="speaker caller">Caller</span> <span>I need to get my teeth cleaned, do you have anything this week?</span></div>
+          <div class="line"><span class="speaker ai">Agent</span> <span>Let me check the schedule. I have Thursday at 2 PM or Friday at 10 AM.</span></div>
+          <div class="tool-call">↳ tool: check_availability(start_date=2026-08-06)</div>
+          <div class="line"><span class="speaker caller">Caller</span> <span>Thursday at 2 works.</span></div>
+          <div class="tool-call success">↳ tool: create_event(time=14:00, patient=caller_id) ✓ 200 OK</div>
+          <div class="line"><span class="speaker ai">Agent</span> <span>You are booked for Thursday at 2 PM. Sending confirmation now.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stack-bar">
+  <div class="container">
+    <p class="stack-label">Powered by enterprise-grade infrastructure</p>
+    <div class="stack-logos">
+      <span>Twilio</span><span>Vapi</span><span>Google Cloud</span><span>Cal.com</span><span>Stripe</span>
+    </div>
+  </div>
+</section>
+
+<section id="infrastructure">
+  <div class="container">
+    <div class="section-header">
+      <h2>Beyond basic auto-attendants.</h2>
+      <p>Most AI voice agents hallucinate, interrupt, and fail to book. Bative agents are engineered with strict tool-calling guardrails and vertical-specific knowledge bases.</p>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-card large">
+        <div class="bento-icon">01</div>
+        <div>
+          <h3>Real-time Calendar Sync</h3>
+          <p>Agents execute atomic API calls to your calendar or CRM. No hallucinations, no double-bookings. The agent always runs a fresh availability check immediately before committing a slot.</p>
+        </div>
+      </div>
+      <div class="bento-card">
+        <div class="bento-icon">02</div>
+        <div>
+          <h3>Interruption Handling</h3>
+          <p>Native voice-activity detection ensures the agent stops speaking the millisecond the caller interrupts.</p>
+        </div>
+        <div class="waveform">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+      </div>
+      <div class="bento-card">
+        <div class="bento-icon">03</div>
+        <div>
+          <h3>Smart Escalation</h3>
+          <p>Complex queries or emergencies are instantly routed to your mobile device via call forwarding or warm transfer.</p>
+        </div>
+      </div>
+      <div class="bento-card">
+        <div class="bento-icon">04</div>
+        <div>
+          <h3>Post-Call Summaries</h3>
+          <p>Instant SMS/email summaries triggered immediately after the call disconnects. Every conversation logged.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how-it-works" style="background: var(--bg-alt);">
+  <div class="container">
+    <div class="section-header">
+      <h2>System Architecture</h2>
+      <p>Engineered for reliability, low latency, and strict tool-calling guardrails.</p>
+    </div>
+    <div class="arch-grid">
+      <div class="arch-step">
+        <div class="arch-num">01</div>
+        <h3>Telephony Ingest</h3>
+        <p>Twilio trunking routes inbound calls to our voice platform. Keep your existing business number — just forward calls to the agent.</p>
+      </div>
+      <div class="arch-step">
+        <div class="arch-num">02</div>
+        <h3>ASR & LLM Orchestration</h3>
+        <p>Real-time transcription feeds into a strictly-prompted LLM with function-calling constraints and your business knowledge base.</p>
+      </div>
+      <div class="arch-step">
+        <div class="arch-num">03</div>
+        <h3>Tool Execution</h3>
+        <p>Agent executes atomic API calls to your calendar or CRM. Guardrails prevent unauthorized actions and hallucinated time slots.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="verticals">
+  <div class="container">
+    <div class="section-header">
+      <h2>Pre-trained vertical models.</h2>
+      <p>We don't deploy generic agents. We deploy models trained on the specific workflows, terminology, and booking rules of your industry.</p>
+    </div>
+    <div class="vertical-grid">
+      <div class="vertical-card">
+        <h3>// Dental</h3>
+        <p>Trained on cleaning schedules, recall workflows, and insurance FAQ logic.</p>
+        <ul>
+          <li>Insurance FAQ routing</li>
+          <li>Recall & rebooking flows</li>
+          <li>Emergency triage protocols</li>
+        </ul>
+      </div>
+      <div class="vertical-card">
+        <h3>// Home Services</h3>
+        <p>Built for HVAC, plumbing, and electrical. Handles emergency triage and quote routing.</p>
+        <ul>
+          <li>After-hours emergency capture</li>
+          <li>Quote scheduling & follow-ups</li>
+          <li>Technician availability sync</li>
+        </ul>
+      </div>
+      <div class="vertical-card">
+        <h3>// Med Spa</h3>
+        <p>Manages consultation booking, treatment FAQs, and client intake flows.</p>
+        <ul>
+          <li>Consultation qualification</li>
+          <li>Treatment question handling</li>
+          <li>Automated confirmation links</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="demo" class="demo-section">
+  <div class="container demo-container">
+    <h2>Hear the infrastructure.</h2>
+    <p>Call our live production agent. Try to confuse it, interrupt it, or book an appointment.</p>
+    <div class="demo-phone">
+      <div class="phone-number demo-number-slot">+1 (555) 010-0000</div>
+      <div class="phone-actions">
+        <a href="tel:+15550100000" class="btn btn-demo demo-tel">Call Agent</a>
+        <button class="btn btn-copy" id="copyBtn">Copy Number</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cohort">
+  <div class="container">
+    <div class="section-header">
+      <h2>The Founding Cohort</h2>
+      <p>We are only onboarding a limited number of deployment partners this quarter. Selected partners bypass the public waitlist and lock in lifetime rates.</p>
+    </div>
+    <div class="cohort-grid">
+      <div class="cohort-card">
+        <div class="cohort-badge">01</div>
+        <h3>Zero-Cost Pilot</h3>
+        <p>14 days of live production traffic on your actual phone lines. We absorb all compute and telephony costs while we prove the ROI together.</p>
+      </div>
+      <div class="cohort-card">
+        <div class="cohort-badge">02</div>
+        <h3>Custom Vertical Training</h3>
+        <p>We manually engineer your knowledge base. The agent is trained on your specific FAQs, pricing, and booking rules — not a generic prompt.</p>
+      </div>
+      <div class="cohort-card">
+        <div class="cohort-badge">03</div>
+        <h3>Locked-In Economics</h3>
+        <p>Cohort members lock in a grandfathered rate for life. When public pricing launches, your infrastructure costs remain fixed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="apply" style="background: var(--bg-alt);">
+  <div class="container">
+    <div class="section-header" style="text-align: center; margin: 0 auto 48px;">
+      <h2>Cohort Application</h2>
+      <p style="margin: 16px auto 0;">Three fields. Everything else we detect automatically. We review applications within 24 hours and call qualified operators directly.</p>
+    </div>
+    <form class="pilot-form" id="pilotForm">
+
+      <div class="form-row">
+        <div class="input-group">
+          <label>Your Name</label>
+          <input type="text" name="Name" required>
+        </div>
+        <div class="input-group">
+          <label>Business Email</label>
+          <input type="email" name="Email" id="emailField" required placeholder="you@yourbusiness.com">
+        </div>
+      </div>
+
+      <!-- Only appears if email is Gmail/Yahoo/etc -->
+      <div class="input-group" id="bizNameGroup" style="display:none;">
+        <label>Business Name</label>
+        <input type="text" name="Business Name" id="bizNameInput" placeholder="You used a personal email — what's the business called?">
+      </div>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label>Phone Country</label>
+          <select name="Phone Country" id="countrySelect" required>
+            <option value="" disabled selected>Detecting…</option>
+            <option value="+1">United States / Canada (+1)</option>
+            <option value="+44">United Kingdom (+44)</option>
+            <option value="+90">Turkey (+90)</option>
+            <option value="+49">Germany (+49)</option>
+            <option value="+33">France (+33)</option>
+            <option value="+34">Spain (+34)</option>
+            <option value="+39">Italy (+39)</option>
+            <option value="+31">Netherlands (+31)</option>
+            <option value="+971">UAE (+971)</option>
+            <option value="+966">Saudi Arabia (+966)</option>
+            <option value="+61">Australia (+61)</option>
+            <option value="+52">Mexico (+52)</option>
+            <option value="+55">Brazil (+55)</option>
+            <option value="+91">India (+91)</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Phone Number</label>
+          <input type="tel" name="Phone Number" id="phoneInput" required placeholder="555 123 4567">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label>Industry</label>
+          <select name="Vertical" required>
+            <option value="" disabled selected>Select</option>
+            <option>Dental</option>
+            <option>Home Services / HVAC</option>
+            <option>Med Spa / Wellness</option>
+            <option>Legal</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Missed Calls / Week</label>
+          <select name="Missed Calls Per Week" required>
+            <option value="" disabled selected>Select</option>
+            <option>0 - 5 calls</option>
+            <option>5 - 20 calls</option>
+            <option>20 - 50 calls</option>
+            <option>50+ calls</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Current Booking System</label>
+        <select name="Booking System" required>
+          <option value="" disabled selected>Select</option>
+          <option>Google Calendar</option>
+          <option>ServiceTitan / Housecall Pro</option>
+          <option>Booksy / Square</option>
+          <option>Manual / Pen & Paper</option>
+          <option>Other / Custom</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>Additional Context (Optional)</label>
+        <textarea name="Context" rows="3" placeholder="Anything else we should know…"></textarea>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="consentBox" required>
+        <span>I agree to be contacted about this application and to the processing of my submission data (including IP address) for fraud prevention. See <a href="#privacy">Privacy & Data Handling</a>.</span>
+      </label>
+
+      <!-- Silent telemetry (disclosed in #privacy) -->
+      <input type="hidden" name="Full Phone" id="fullPhone">
+      <input type="hidden" name="Submission Time" id="submissionTime">
+      <input type="hidden" name="IP Address" id="ipAddress">
+      <input type="hidden" name="IP Country" id="ipCountry">
+      <input type="hidden" name="IP City" id="ipCity">
+      <input type="hidden" name="IP Timezone" id="ipTimezone">
+      <input type="hidden" name="VPN or Proxy" id="vpnFlag">
+      <input type="hidden" name="Browser Timezone" id="browserTz">
+      <input type="hidden" name="Device" id="userAgent">
+      <input type="hidden" name="Referrer" id="referrer">
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">Submit Application →</button>
+    </form>
+  </div>
+</section>
+
+<section id="privacy">
+  <div class="container" style="max-width: 760px;">
+    <h2 style="font-size: 1.6rem; margin-bottom: 24px;">Privacy & Data Handling</h2>
+    <div style="display:flex; flex-direction:column; gap:16px; font-size:0.95rem;">
+      <p><strong>What we collect.</strong> The fields you enter above, plus technical data collected automatically: IP address, approximate location (country/city), timezone, device and browser type, and the page that referred you.</p>
+      <p><strong>Why.</strong> To respond to your application, to pre-fill your phone country code, and to prevent spam and fraudulent submissions. Your data is never sold.</p>
+      <p><strong>Who processes it.</strong> Form submissions are handled by Formspree (form infrastructure) and IP verification by ipapi.is (fraud detection). Bative (bative.co) is the data controller — contact: list@bative.co.</p>
+      <p><strong>Retention.</strong> Applications that do not proceed are deleted within 90 days.</p>
+      <p><strong>Your rights.</strong> Email list@bative.co at any time to access, correct, or delete your data. Your phone number is used only to respond to this application — never for marketing lists without separate consent.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container foot-inner">
+    <div>© 2026 Bative Infrastructure</div>
+    <div><a href="mailto:list@bative.co">list@bative.co</a> · <a href="#privacy">Privacy</a></div>
+  </div>
+</footer>
+
+<script>
+  // ---------- Demo number ----------
+  const DEMO_NUMBER = "+15550100000";       // ← replace when your agent is live
+  const DEMO_DISPLAY = "+1 (555) 010-0000";  // ← replace when your agent is live
+  document.querySelectorAll('.demo-number-slot').forEach(el => el.textContent = DEMO_DISPLAY);
+  document.querySelectorAll('.demo-tel').forEach(el => el.href = "tel:" + DEMO_NUMBER);
+  document.getElementById('copyBtn').addEventListener('click', e => {
+    e.preventDefault();
+    navigator.clipboard.writeText(DEMO_DISPLAY);
+    e.target.textContent = "Copied";
+    setTimeout(() => e.target.textContent = "Copy Number", 2000);
+  });
+
+  // ---------- Silent telemetry (disclosed in #privacy + consent checkbox) ----------
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || 'not captured'; };
+
+  set('browserTz', Intl.DateTimeFormat().resolvedOptions().timeZone);
+  set('userAgent', navigator.userAgent);
+  set('referrer', document.referrer || 'direct / link');
+
+  // Auto-preselect phone country code from IP geolocation
+  const dialMap = {US:"+1",CA:"+1",GB:"+44",TR:"+90",DE:"+49",FR:"+33",ES:"+34",IT:"+39",NL:"+31",AE:"+971",SA:"+966",AU:"+61",MX:"+52",BR:"+55",IN:"+91"};
+  function preselectCountry(code) {
+    const dial = dialMap[code];
+    const sel = document.getElementById('countrySelect');
+    if (dial && sel) { for (const opt of sel.options) { if (opt.value === dial) { sel.value = dial; break; } } }
+  }
+
+  // IP lookup: primary ipapi.is (free, commercial OK, includes VPN flag) → fallback ipapi.co
+  async function fetchIpData() {
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 5000);
+      const res = await fetch('https://ipapi.is/json/', { signal: ctrl.signal });
+      clearTimeout(timer);
+      const d = await res.json();
+      set('ipAddress', d.ip);
+      set('ipCountry', d.country);
+      set('ipCity', d.city);
+      set('ipTimezone', d.timezone);
+      const flags = [];
+      if (d.is_proxy) flags.push('VPN/proxy');
+      if (d.is_datacenter) flags.push('datacenter');
+      if (d.is_tor) flags.push('Tor');
+      set('vpnFlag', flags.length ? 'YES — ' + flags.join(', ') : 'NO');
+      if (d.country_code) preselectCountry(d.country_code);
+      return;
+    } catch (e) { /* fallback below */ }
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      const d = await res.json();
+      set('ipAddress', d.ip);
+      set('ipCountry', d.country_name);
+      set('ipCity', d.city);
+      set('ipTimezone', d.timezone);
+      set('vpnFlag', 'n/a (fallback)');
+      if (d.country_code) preselectCountry(d.country_code);
+    } catch (e2) {
+      ['ipAddress','ipCountry','ipCity','ipTimezone','vpnFlag'].forEach(id => set(id, 'not captured'));
+    }
+  }
+  fetchIpData();
+
+  // Smart fallback: only ask business name if they use a personal email provider
+  const freeProviders = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','proton.me','protonmail.com','yandex.com','yandex.ru','mail.com','gmx.com','live.com'];
+  document.getElementById('emailField').addEventListener('input', e => {
+    const domain = (e.target.value.split('@')[1] || '').toLowerCase().trim();
+    const isFree = freeProviders.includes(domain);
+    document.getElementById('bizNameGroup').style.display = isFree ? 'flex' : 'none';
+    document.getElementById('bizNameInput').required = isFree;
+  });
+
+  // ---------- Submit via Formspree (free tier → list@bative.co) ----------
+  const FORMSPREE_ID = "xvkppzza"; // ← paste your Formspree ID here
+
+  document.getElementById('pilotForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const form = e.target;
+
+    // Compose full phone with country code
+    const sel = document.getElementById('countrySelect');
+    const phone = document.getElementById('phoneInput').value.trim();
+    set('fullPhone', sel.value === 'other' ? phone + ' (country code missing — ask on call)' : sel.value + ' ' + phone);
+
+    // Stamp submission time
+    const now = new Date();
+    set('submissionTime', now.toISOString() + ' | local: ' + now.toLocaleString());
+
+    // Fill gaps if any telemetry failed
+    ['ipAddress','ipCountry','ipCity','ipTimezone','vpnFlag','browserTz','userAgent','referrer'].forEach(id => {
+      if (!document.getElementById(id).value) set(id, 'not captured');
+    });
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST", body: new FormData(form), headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        form.innerHTML = `<div style="padding: 40px; text-align: center; background: #fff; border: 1px solid var(--border); border-radius: 16px;">
+          <h3 style="margin-bottom: 12px; font-family: var(--font-mono);">Application Received</h3>
+          <p style="color: var(--text-muted);">Our team reviews applications within 24 hours and will call qualified operators directly.</p>
+        </div>`;
+      } else { throw new Error(); }
+    } catch (err) {
+      alert("Submission failed. Please email list@bative.co directly.");
+    }
+  });
+</script>
+</body>
+</html>
