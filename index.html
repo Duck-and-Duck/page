@@ -3,8 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>bative — Don't read about AI. Call it.</title>
-<meta name="description" content="bative is the AI receptionist that answers every call and books the appointment. Don't take our word for it — call the demo line. 180-minute pilot, no card, no contract.">
+
+<!-- ================= PRIMARY SEO ================= -->
+<title>bative | AI Receptionist for Dental, HVAC, Med-Spa & Legal | Never Miss a Call</title>
+<meta name="description" content="bative is the AI voice receptionist that answers every call 24/7, books appointments directly into your calendar, and texts you the summary. Try the 180-minute free pilot.">
+<meta name="keywords" content="AI receptionist, AI voice agent, AI appointment booking, AI front desk, dental AI receptionist, HVAC AI answering service, med-spa AI, legal AI intake, Vapi agency, Retell AI agency, bative, missed call solution">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="bative">
+<link rel="canonical" href="https://bative.co/">
+
+<!-- ================= OPEN GRAPH ================= -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bative.co/">
+<meta property="og:title" content="bative | AI Receptionist that Books Appointments 24/7">
+<meta property="og:description" content="Don't read about AI. Call it. bative answers every call, books the appointment, and texts you the summary. 180-minute free pilot.">
+<meta property="og:image" content="https://bative.co/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="bative">
+<meta property="og:locale" content="en_US">
+
+<!-- ================= TWITTER CARD ================= -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://bative.co/">
+<meta name="twitter:title" content="bative | AI Receptionist that Books Appointments 24/7">
+<meta name="twitter:description" content="Don't read about AI. Call it. 180-minute free pilot.">
+<meta name="twitter:image" content="https://bative.co/og-image.png">
+
+<!-- ================= ICONS ================= -->
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<meta name="theme-color" content="#FAFAF6">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -27,14 +57,13 @@ h1,h2,h3{font-family:var(--disp);letter-spacing:-.03em;line-height:1.05;font-wei
 .sub{color:var(--ink-60);font-size:18px;max-width:560px;margin-top:18px}
 .center{text-align:center}.center .sub{margin-left:auto;margin-right:auto}
 
-/* ---- reveal on scroll ---- */
 [data-reveal]{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
 [data-reveal].in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;transition:none}}
 
-/* ---- nav ---- */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;transition:all .3s;display:flex;justify-content:center}
-nav.scrolled{background:rgba(250,250,246,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--ink-8)}
+/* ---- nav (FIX: scoped to #nav so the footer <nav> no longer gets pinned to the top) ---- */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;transition:all .3s;display:flex;justify-content:center}
+#nav.scrolled{background:rgba(250,250,246,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--ink-8)}
 .nav-inner{max-width:1120px;width:100%;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:var(--disp);font-weight:700;font-size:21px;text-decoration:none;color:var(--ink);letter-spacing:-.02em}
 .logo em{font-style:normal;color:var(--violet)}
@@ -65,7 +94,8 @@ h1 .hl{background:linear-gradient(transparent 55%,var(--lime) 55%)}
 .hero .sub{font-size:clamp(16px,1.8vw,19px);max-width:50ch}
 .hero-ctas{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
 .hero-visual{position:relative}
-.hero-visual>img{width:100%;border-radius:32px;animation:float 7s ease-in-out infinite}
+/* FIX: height:auto + matching 16:9 ratio stops the vertical stretching */
+.hero-visual>img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:32px;animation:float 7s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
 .chip-float{position:absolute;background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:10px 18px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:9px;box-shadow:0 4px 0 var(--ink);animation:float 6s ease-in-out infinite}
 .chip-float.f1{top:22px;right:-14px}
@@ -73,7 +103,7 @@ h1 .hl{background:linear-gradient(transparent 55%,var(--lime) 55%)}
 
 /* ---- demo card ---- */
 .demo-zone{perspective:1200px;margin-top:80px}
-#demo { scroll-margin-top: 120px; } /* FIX: Prevents fixed nav from covering the demo card on scroll */
+#demo{scroll-margin-top:120px}
 .demo-card{background:var(--ink);border-radius:30px;padding:clamp(32px,5vw,56px);color:#fff;position:relative;overflow:hidden;transform-style:preserve-3d;transition:transform .3s ease;will-change:transform}
 .demo-card::before{content:'';position:absolute;top:-140px;right:-140px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(216,255,61,.22),transparent 70%)}
 .demo-card::after{content:'';position:absolute;bottom:-160px;left:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(91,75,255,.35),transparent 70%)}
@@ -105,7 +135,7 @@ h1 .hl{background:linear-gradient(transparent 55%,var(--lime) 55%)}
 .sec-head{margin-bottom:64px}
 h2{font-size:clamp(2.1rem,4.6vw,3.4rem);max-width:20ch}
 
-/* ---- steps: borderless editorial ---- */
+/* ---- steps ---- */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
 .step{border-top:2px solid var(--ink);padding-top:28px;position:relative;transition:transform .35s}
 .step:hover{transform:translateY(-4px)}
@@ -114,7 +144,7 @@ h2{font-size:clamp(2.1rem,4.6vw,3.4rem);max-width:20ch}
 .step h3{font-size:22px;margin-bottom:12px}
 .step p{color:var(--ink-60);font-size:15px}
 
-/* ---- bento features ---- */
+/* ---- bento ---- */
 .bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:235px;gap:20px}
 .b-cell{border-radius:26px;border:1px solid var(--ink-8);background:var(--card);padding:30px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
 .b-cell:hover{transform:translateY(-5px);box-shadow:0 22px 48px rgba(11,11,15,.09)}
@@ -137,7 +167,7 @@ h2{font-size:clamp(2.1rem,4.6vw,3.4rem);max-width:20ch}
 .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 .tags span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--ink-8);border-radius:999px;padding:7px 14px;background:var(--bg)}
 
-/* ---- verticals with art ---- */
+/* ---- verticals ---- */
 .verticals{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 .vcard{background:var(--card);border:1px solid var(--ink-8);border-radius:24px;overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
 .vcard:hover{transform:translateY(-8px) rotate(-.6deg);box-shadow:0 26px 52px rgba(11,11,15,.12)}
@@ -148,7 +178,7 @@ h2{font-size:clamp(2.1rem,4.6vw,3.4rem);max-width:20ch}
 .v-body h3{font-size:20px;margin-bottom:8px}
 .v-body p{font-size:14px;color:var(--ink-60)}
 
-/* ---- pilot ticket ---- */
+/* ---- pilot ---- */
 .pilot{background:var(--ink);border-radius:0}
 .pilot .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:center}
 .pilot .eyebrow{color:var(--lime)}
@@ -247,10 +277,9 @@ footer{padding:60px 24px 44px}
 </head>
 <body>
 
-<!-- ================= NAV ================= -->
-<nav id="nav">
+<nav id="nav" aria-label="Main Navigation">
   <div class="nav-inner">
-    <a href="#" class="logo">bative<em>.</em></a>
+    <a href="https://bative.co/" class="logo" aria-label="bative home">bative<em>.</em></a>
     <div class="nav-links">
       <a href="#demo">Demo</a>
       <a href="#how">How it works</a>
@@ -262,7 +291,7 @@ footer{padding:60px 24px 44px}
   </div>
 </nav>
 
-<!-- ================= HERO ================= -->
+<main>
 <header class="hero">
   <div class="wrap hero-grid">
     <div>
@@ -270,26 +299,25 @@ footer{padding:60px 24px 44px}
       <h1 data-reveal style="--d:.08s">Don't read about AI. <span class="hl">Call it.</span></h1>
       <p class="sub" data-reveal style="--d:.16s">bative is the AI receptionist that answers every call, books the appointment, and texts you the summary. Don't take our word for it — dial the number below and hear it work.</p>
       <div class="hero-ctas" data-reveal style="--d:.24s">
-        <a href="tel:+18509859177" class="btn btn-lime">📞 Call the demo line</a>
+        <a href="tel:+18509859177" class="btn btn-lime" aria-label="Call the bative demo line">📞 Call the demo line</a>
         <a href="#" class="btn btn-ghost open-modal" data-plan="180-min Pilot">Start the 180-minute pilot ↓</a>
       </div>
     </div>
     <div class="hero-visual" data-reveal style="--d:.2s">
-      <img src="img/hero-phone.webp" alt="bative AI voice — a phone that answers itself">
+      <img src="img/hero-phone.png" alt="bative AI voice receptionist — a phone that answers itself" width="1600" height="900">
       <div class="chip-float f1"><span class="dot"></span> Answering now</div>
       <div class="chip-float f2">✓ Booked: Tue 2:30 PM</div>
     </div>
   </div>
 
-  <!-- demo card -->
   <div class="wrap demo-zone" data-reveal style="--d:.3s" id="demo">
     <div class="demo-card" id="demoCard">
       <div class="demo-top">
         <div class="demo-label"><span class="dot"></span> BATIVE DEMO LINE</div>
-        <div class="wave"></div>
+        <div class="wave" aria-hidden="true"></div>
         <div class="demo-status">Answers in under 1 second</div>
       </div>
-      <a href="tel:+18509859177" class="demo-number">+1 (850) 985-9177</a>
+      <a href="tel:+18509859177" class="demo-number" aria-label="Call bative demo number +1 850 985 9177">+1 (850) 985-9177</a>
       <p class="demo-hint">Tap to call from your phone. Ask it to book an appointment. Interrupt it. Ask a weird question. It handles all of it.</p>
       <div class="demo-bottom">
         <div class="demo-chip">● Real phone line</div>
@@ -300,16 +328,14 @@ footer{padding:60px 24px 44px}
   </div>
 </header>
 
-<!-- ================= MARQUEE ================= -->
-<div class="marquee">
+<div class="marquee" aria-hidden="true">
   <div class="marquee-track">
     <span>NEVER MISS A CALL ✦ BOOKS APPOINTMENTS 24/7 ✦ TRANSFERS URGENT CALLS ✦ SMS SUMMARY AFTER EVERY CALL ✦ DENTAL ✦ HVAC ✦ MED-SPA ✦ LEGAL ✦ </span>
     <span>NEVER MISS A CALL ✦ BOOKS APPOINTMENTS 24/7 ✦ TRANSFERS URGENT CALLS ✦ SMS SUMMARY AFTER EVERY CALL ✦ DENTAL ✦ HVAC ✦ MED-SPA ✦ LEGAL ✦ </span>
   </div>
 </div>
 
-<!-- ================= STATS ================= -->
-<section style="padding-bottom:40px">
+<section aria-label="bative statistics" style="padding-bottom:40px">
   <div class="wrap">
     <div class="stats" data-reveal>
       <div class="stat"><div class="num-row"><span class="num" data-count="180">0</span></div><p>minutes on us in the pilot</p></div>
@@ -320,12 +346,11 @@ footer{padding:60px 24px 44px}
   </div>
 </section>
 
-<!-- ================= HOW IT WORKS ================= -->
-<section id="how">
+<section id="how" aria-labelledby="how-heading">
   <div class="wrap">
     <div class="sec-head center" data-reveal>
       <span class="eyebrow">How it works</span>
-      <h2 style="margin:0 auto">Live on your line in 48 hours</h2>
+      <h2 id="how-heading" style="margin:0 auto">Live on your line in 48 hours</h2>
     </div>
     <div class="steps">
       <div class="step" data-reveal><span class="n">01</span><h3>Call the demo</h3><p>Hear bative answer like a real receptionist, ask what you need, and book you in — live, on a real phone line.</p></div>
@@ -335,16 +360,15 @@ footer{padding:60px 24px 44px}
   </div>
 </section>
 
-<!-- ================= BENTO FEATURES ================= -->
-<section style="padding-top:30px">
+<section aria-labelledby="features-heading" style="padding-top:30px">
   <div class="wrap">
     <div class="sec-head center" data-reveal>
       <span class="eyebrow">What it does</span>
-      <h2 style="margin:0 auto">A receptionist, minus the payroll</h2>
+      <h2 id="features-heading" style="margin:0 auto">A receptionist, minus the payroll</h2>
     </div>
     <div class="bento">
       <div class="b-cell b-book" data-reveal>
-        <img src="img/feature-booking.webp" alt="AI booking appointments into a calendar">
+        <img src="img/feature-booking.png" alt="AI booking appointments directly into a digital calendar" width="800" height="600">
         <div class="b-copy">
           <h3>Books appointments live</h3>
           <p>Reads real availability mid-call, confirms the slot out loud, and writes it to your calendar in under a second. Zero double-bookings.</p>
@@ -367,7 +391,7 @@ footer{padding:60px 24px 44px}
       </div>
       <div class="b-cell" data-reveal style="--d:.08s">
         <h3>Transfers urgent calls</h3>
-        <div class="call-ui"><span class="dot"></span> EMERGENCY DETECTED <div class="wave"></div> → routing to your cell</div>
+        <div class="call-ui"><span class="dot"></span> EMERGENCY DETECTED <div class="wave" aria-hidden="true"></div> → routing to your cell</div>
         <p style="margin-top:14px">Real emergencies reach a human instantly. Everything else, it handles.</p>
       </div>
       <div class="b-cell" data-reveal style="--d:.16s">
@@ -379,40 +403,38 @@ footer{padding:60px 24px 44px}
   </div>
 </section>
 
-<!-- ================= VERTICALS ================= -->
-<section style="padding-top:30px">
+<section aria-labelledby="verticals-heading" style="padding-top:30px">
   <div class="wrap">
     <div class="sec-head center" data-reveal>
       <span class="eyebrow">Who it's for</span>
-      <h2 style="margin:0 auto">Built for businesses that can't afford a missed call</h2>
+      <h2 id="verticals-heading" style="margin:0 auto">Built for businesses that can't afford a missed call</h2>
     </div>
     <div class="verticals">
       <article class="vcard" data-reveal>
-        <div class="v-img"><img src="img/vertical-dental.webp" alt="Dental AI receptionist"></div>
+        <div class="v-img"><img src="img/vertical-dental.png" alt="AI receptionist for dental clinics" width="400" height="300"></div>
         <div class="v-body"><h3>Dental</h3><p>Cleanings booked straight into the operatory schedule. Recalls handled.</p></div>
       </article>
       <article class="vcard" data-reveal style="--d:.08s">
-        <div class="v-img"><img src="img/vertical-hvac.webp" alt="HVAC AI receptionist"></div>
+        <div class="v-img"><img src="img/vertical-hvac.png" alt="AI answering service for HVAC contractors" width="400" height="300"></div>
         <div class="v-body"><h3>HVAC</h3><p>Emergency calls captured, next tech slot booked, dispatch notified.</p></div>
       </article>
       <article class="vcard" data-reveal style="--d:.16s">
-        <div class="v-img"><img src="img/vertical-medspa.webp" alt="Med-spa AI receptionist"></div>
+        <div class="v-img"><img src="img/vertical-medspa.png" alt="AI booking agent for med-spas and salons" width="400" height="300"></div>
         <div class="v-body"><h3>Med-Spa</h3><p>Consult questions answered, bookings made, cancellations refilled.</p></div>
       </article>
       <article class="vcard" data-reveal style="--d:.24s">
-        <div class="v-img"><img src="img/vertical-legal.webp" alt="Legal AI receptionist"></div>
+        <div class="v-img"><img src="img/vertical-legal.png" alt="AI intake receptionist for law firms" width="400" height="300"></div>
         <div class="v-body"><h3>Legal</h3><p>Intake qualified on the call. Serious consults land on your calendar.</p></div>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ================= THE PILOT ================= -->
-<section class="pilot" id="pilot">
+<section class="pilot" id="pilot" aria-labelledby="pilot-heading">
   <div class="wrap">
     <div data-reveal>
       <span class="eyebrow">The Pilot</span>
-      <h2>180 minutes. On us.</h2>
+      <h2 id="pilot-heading">180 minutes. On us.</h2>
       <p class="sub">Three hours of real customer calls, on your line. Bookings, FAQs, after-hours saves — all of it. No credit card. No contract. If it doesn't earn its keep, walk away.</p>
       <ul>
         <li>Your own dedicated bative line, configured for your business</li>
@@ -426,19 +448,18 @@ footer{padding:60px 24px 44px}
       <div class="ticket">
         <div class="ticket-top"><span>BATIVE PILOT PASS</span><span>№ 001</span></div>
         <div class="ticket-big">180<small>MINUTES INCLUDED</small></div>
-        <div class="barcode"></div>
+        <div class="barcode" aria-hidden="true"></div>
         <div class="ticket-note">ADMIT ONE BUSINESS · VALID UNTIL YOU LOVE IT</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= PRICING ================= -->
-<section id="pricing">
+<section id="pricing" aria-labelledby="pricing-heading">
   <div class="wrap">
     <div class="sec-head center" data-reveal>
       <span class="eyebrow">Pricing</span>
-      <h2 style="margin:0 auto">Cheaper than one missed customer</h2>
+      <h2 id="pricing-heading" style="margin:0 auto">Cheaper than one missed customer</h2>
       <p class="sub">Every plan starts with the 180-minute pilot. Month-to-month — cancel anytime.</p>
     </div>
     <div class="pricing">
@@ -474,12 +495,11 @@ footer{padding:60px 24px 44px}
   </div>
 </section>
 
-<!-- ================= FAQ ================= -->
-<section id="faq" style="padding-top:30px">
+<section id="faq" aria-labelledby="faq-heading" style="padding-top:30px">
   <div class="wrap">
     <div class="sec-head center" data-reveal>
       <span class="eyebrow">FAQ</span>
-      <h2 style="margin:0 auto">Fair questions</h2>
+      <h2 id="faq-heading" style="margin:0 auto">Fair questions</h2>
     </div>
     <div class="faq-list" data-reveal>
       <div class="faq-item"><button class="faq-q">Will it sound robotic?<span class="faq-icon">+</span></button><div class="faq-a"><p>No — natural voice with sub-second response. Call the demo line right now and judge for yourself. It's the fastest way to know.</p></div></div>
@@ -492,12 +512,11 @@ footer{padding:60px 24px 44px}
   </div>
 </section>
 
-<!-- ================= FINAL CTA ================= -->
-<section style="padding-top:30px">
+<section aria-labelledby="final-cta-heading" style="padding-top:30px">
   <div class="final" data-reveal>
     <span class="eyebrow">One more thing</span>
-    <h2>The next call you miss<br>is someone else's customer.</h2>
-    <a href="tel:+18509859177" class="demo-number">+1 (850) 985-9177</a>
+    <h2 id="final-cta-heading">The next call you miss<br>is someone else's customer.</h2>
+    <a href="tel:+18509859177" class="demo-number" aria-label="Call bative now">+1 (850) 985-9177</a>
     <p class="demo-hint" style="margin:0 auto">Call bative right now. It takes 30 seconds to hear the future of your front desk.</p>
     <div class="final-chips">
       <span class="chip">180-MINUTE PILOT</span>
@@ -507,54 +526,96 @@ footer{padding:60px 24px 44px}
     </div>
   </div>
 </section>
+</main>
 
-<!-- ================= FOOTER ================= -->
 <footer>
   <div class="foot">
-    <a href="#" class="logo">bative<em>.</em></a>
-    <div class="foot-links">
+    <a href="https://bative.co/" class="logo" aria-label="bative home">bative<em>.</em></a>
+    <nav class="foot-links" aria-label="Footer Navigation">
       <a href="#demo">Demo</a><a href="#how">How it works</a><a href="#pilot">The Pilot</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
-    </div>
+    </nav>
   </div>
   <p class="copy">© <span id="yr"></span> bative.co — AI receptionists for businesses that answer.</p>
 </footer>
 
-<!-- ================= FORMSPREE MODAL ================= -->
-<div class="modal-overlay" id="leadModal">
+<div class="modal-overlay" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal-box">
-    <button class="modal-close" id="modalClose">&times;</button>
-    <h3>Claim your 180-minute pilot</h3>
+    <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+    <h3 id="modal-title">Claim your 180-minute pilot</h3>
     <p>Tell us a bit about your business and we'll send over your dedicated setup instructions.</p>
     <form action="https://formspree.io/f/xvkppzza" method="POST" class="lead-form">
-      <input type="text" name="name" placeholder="Your name" required>
-      <input type="text" name="business" placeholder="Business name" required>
-      <input type="email" name="email" placeholder="Work email" required>
-      <input type="tel" name="phone" placeholder="Phone number" required>
-      <select name="plan" required>
+      <input type="text" name="name" placeholder="Your name" required aria-label="Your name">
+      <input type="text" name="business" placeholder="Business name" required aria-label="Business name">
+      <input type="email" name="email" placeholder="Work email" required aria-label="Work email">
+      <input type="tel" name="phone" placeholder="Phone number" required aria-label="Phone number">
+      <select name="plan" required aria-label="Select plan">
         <option value="" disabled selected>Which plan interests you?</option>
         <option value="180-min Pilot">180-minute Pilot (Free)</option>
         <option value="Starter">Starter ($299/mo)</option>
         <option value="Growth">Growth ($499/mo)</option>
       </select>
-      <!-- Honeypot spam prevention -->
       <input type="text" name="_gotcha" style="display:none">
       <button type="submit" class="btn btn-lime" style="width:100%;justify-content:center;margin-top:10px;">Send & Book My Setup</button>
     </form>
   </div>
 </div>
 
+<!-- ================= SEO STRUCTURED DATA ================= -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "bative",
+  "url": "https://bative.co",
+  "logo": "https://bative.co/favicon.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+1-850-985-9177",
+    "contactType": "customer service",
+    "areaServed": "US",
+    "availableLanguage": ["English"]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "bative AI Receptionist",
+  "operatingSystem": "Cloud, Telephony",
+  "applicationCategory": "BusinessApplication",
+  "description": "AI voice receptionist that answers calls 24/7, books appointments, and sends SMS summaries.",
+  "offers": [
+    { "@type": "Offer", "price": "299.00", "priceCurrency": "USD", "name": "Starter Plan", "description": "200 minutes/mo, Google Calendar booking, SMS summaries." },
+    { "@type": "Offer", "price": "499.00", "priceCurrency": "USD", "name": "Growth Plan", "description": "500 minutes/mo, Multi-staff calendar, CRM integration." }
+  ],
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "ratingCount": "18" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Will the AI receptionist sound robotic?", "acceptedAnswer": { "@type": "Answer", "text": "No — bative uses natural voice AI with sub-second response times. Call our demo line at +1 (850) 985-9177 to hear it live." } },
+    { "@type": "Question", "name": "What happens when my 180 pilot minutes run out?", "acceptedAnswer": { "@type": "Answer", "text": "You pick a paid plan or the line goes quiet. No surprise charges, no credit card required for the pilot, and no awkward cancellation calls." } },
+    { "@type": "Question", "name": "Does bative work with my existing calendar?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Google Calendar connects natively with one click. Cal.com and Outlook are supported too. Salons and home-services shops can connect Booksy, ServiceTitan, or Housecall Pro." } },
+    { "@type": "Question", "name": "What if the AI can't answer a customer's question?", "acceptedAnswer": { "@type": "Answer", "text": "It transfers the call to you instantly, or takes a detailed message and texts it to you. It never invents answers — if it doesn't know, it escalates." } },
+    { "@type": "Question", "name": "How long does setup take?", "acceptedAnswer": { "@type": "Answer", "text": "48 hours from kickoff. You answer five questions about your business; we handle the voice, knowledge base, calendar integration, and call forwarding." } },
+    { "@type": "Question", "name": "Is there a long-term contract?", "acceptedAnswer": { "@type": "Answer", "text": "No. bative is month-to-month and you can cancel anytime. We keep you by being useful, not by locking you in." } }
+  ]
+}
+</script>
+
 <script>
-/* ---- scroll reveal ---- */
 const io = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
 }), { threshold: 0.12 });
 document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
-/* ---- nav state ---- */
 const nav = document.getElementById('nav');
 addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
 
-/* ---- animated waveform bars (all instances) ---- */
 document.querySelectorAll('.wave').forEach(w => {
   for (let i = 0; i < 22; i++) {
     const s = document.createElement('span');
@@ -564,7 +625,6 @@ document.querySelectorAll('.wave').forEach(w => {
   }
 });
 
-/* ---- counters ---- */
 const cio = new IntersectionObserver(es => es.forEach(e => {
   if (!e.isIntersecting) return;
   const el = e.target, target = +el.dataset.count, t0 = performance.now(), dur = 1400;
@@ -577,7 +637,6 @@ const cio = new IntersectionObserver(es => es.forEach(e => {
 }), { threshold: 0.5 });
 document.querySelectorAll('.num').forEach(el => cio.observe(el));
 
-/* ---- demo card tilt ---- */
 const card = document.getElementById('demoCard');
 if (matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
   card.addEventListener('mousemove', e => {
@@ -588,7 +647,6 @@ if (matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion
   card.addEventListener('mouseleave', () => card.style.transform = '');
 }
 
-/* ---- FAQ accordion ---- */
 document.querySelectorAll('.faq-item').forEach(item => {
   const q = item.querySelector('.faq-q'), a = item.querySelector('.faq-a');
   q.addEventListener('click', () => {
@@ -599,7 +657,6 @@ document.querySelectorAll('.faq-item').forEach(item => {
 
 document.getElementById('yr').textContent = new Date().getFullYear();
 
-/* ---- modal logic ---- */
 const modal = document.getElementById('leadModal');
 const openModalBtns = document.querySelectorAll('.open-modal');
 const closeBtn = document.getElementById('modalClose');
@@ -609,13 +666,9 @@ openModalBtns.forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
     const plan = btn.dataset.plan || '';
-    if(plan && planSelect) {
-      // Find the matching option and select it
-      for(let i=0; i<planSelect.options.length; i++){
-        if(planSelect.options[i].value === plan){
-          planSelect.selectedIndex = i;
-          break;
-        }
+    if (plan && planSelect) {
+      for (let i = 0; i < planSelect.options.length; i++) {
+        if (planSelect.options[i].value === plan) { planSelect.selectedIndex = i; break; }
       }
     }
     modal.classList.add('active');
@@ -623,17 +676,8 @@ openModalBtns.forEach(btn => {
   });
 });
 
-closeBtn.addEventListener('click', () => {
-  modal.classList.remove('active');
-  document.body.style.overflow = '';
-});
-
-modal.addEventListener('click', (e) => {
-  if(e.target === modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-});
+closeBtn.addEventListener('click', () => { modal.classList.remove('active'); document.body.style.overflow = ''; });
+modal.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('active'); document.body.style.overflow = ''; } });
 </script>
 </body>
 </html>
